@@ -1,6 +1,5 @@
-package com.example.movie.view
+package com.example.movie.model
 
-import com.example.movie.model.Posts
 import retrofit2.Response
 import retrofit2.http.GET
 

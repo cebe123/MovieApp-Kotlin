@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie.model.Posts
-import com.example.movie.view.RetrofitInstance
+import com.example.movie.model.RetrofitInstance
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
     }
 
 
-     private fun getPosts() {
+     fun getPosts() {
         viewModelScope.launch {
 
             try {
@@ -44,10 +44,10 @@ class MainViewModel : ViewModel() {
                         404 -> _error.value = "Not Found"
                     }
                 }
-            }catch (e: IOException) {
+            } catch (e: IOException) {
                 _error.value = "Network Error: ${e.message}"
 
-            }catch (e: retrofit2.HttpException) {
+            } catch (e: retrofit2.HttpException) {
                 _error.value = "HTTP Error: ${e.message}"
 
             } catch (e: Exception) {
