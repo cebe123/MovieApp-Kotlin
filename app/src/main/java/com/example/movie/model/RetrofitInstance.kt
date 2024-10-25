@@ -4,9 +4,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /*
-* Uygulama başında bir kere çalıştırılır.
-* Singleton bir yapıdır.
-* lazy---->Uygulama ilk kullanılacağı anda create edilir
+* Bu özellik ilk erişildiğinde oluşturulur ve daha sonraki kullanımlar
+* için önbelleğe alınır.
 * */
 
 
@@ -18,6 +17,13 @@ object RetrofitInstance {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    /**
+     * [SimpleApi] arayüzünün örneği.
+     *
+     * Bu özellik, [SimpleApi] arayüzünde tanımlanan API yöntemlerine erişim
+     * sağlar.
+     */
 
     val api: SimpleApi by lazy {
         retrofit.create(SimpleApi::class.java)

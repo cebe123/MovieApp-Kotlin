@@ -3,7 +3,20 @@ package com.example.movie.model
 import retrofit2.Response
 import retrofit2.http.GET
 
+/**
+ * The Movie Database (TMDB) API'sine istekte bulunmak için kullanılan arayüz.
+ *
+ * Bu arayüz, günün trend olan filmlerini almak için bir uç nokta tanımlar.
+ */
+
 interface SimpleApi {
+
+    /**
+     * Günün trend olan filmlerini TMDB API'sinden alır.
+     *
+     * @return [Posts] nesnesi içeren bir [Response].
+     * [Posts] nesnesi, film listesini içerir.
+     */
 
     @GET ("trending/movie/day?api_key=c82fef4dc3aba619d211c8f365739545")
     suspend fun fetchMovies():Response<Posts>

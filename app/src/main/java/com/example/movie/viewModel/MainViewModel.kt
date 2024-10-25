@@ -5,13 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie.model.Posts
-import com.example.movie.model.RetrofitInstance
+import com.example.movie.repo.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
+
 import kotlinx.coroutines.launch
-import java.io.IOException
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor() : ViewModel() {
 
-    //This code defines a read-only property named posts that exposes a LiveData object containing a list of Posts.
+    @Inject
+    lateinit var repository : Repository
 
     private val _posts = MutableLiveData<Posts>()
     val posts: LiveData<Posts>
@@ -23,37 +27,18 @@ class MainViewModel : ViewModel() {
         get() = _error
 
     init {
-        getPosts()
+        fetchPosts()
     }
 
 
-     fun getPosts() {
+    private fun fetchPosts() {
         viewModelScope.launch {
-
             try {
-                val response = RetrofitInstance.api.fetchMovies()
-                if (response.isSuccessful) {
-                    response.body()?.let { post ->
-                        _posts.value = post
-                    }
-                } else {
-                    when (response.code()) {
-                        400 -> _error.value = "Bad Request"
-                        401 -> _error.value = "Unauthorized"
-                        403 -> _error.value = "Forbidden"
-                        404 -> _error.value = "Not Found"
-                    }
-                }
-            } catch (e: IOException) {
-                _error.value = "Network Error: ${e.message}"
-
-            } catch (e: retrofit2.HttpException) {
-                _error.value = "HTTP Error: ${e.message}"
-
+                _posts.value = repository.getPosts()
             } catch (e: Exception) {
-                _error.value = "An unexpected error occurred: ${e.message}"
-
+                _error.value = "An error occurred: ${e.message}"
             }
         }
     }
+
 }
