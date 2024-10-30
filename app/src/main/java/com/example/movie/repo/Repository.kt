@@ -6,15 +6,28 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Repository class for fetching movie posts from the network.
+ * This class handles network requests and exceptions.
+ */
 @Singleton
 class Repository @Inject constructor() {
 
+    /**
+     * Fetches movie posts from the network.
+     *
+     * @return A [Posts] object containing the movie posts.
+     */
     suspend fun getPosts(): Posts {
         try {
+            // Make the network request to fetch movies
             val response = RetrofitInstance.api.fetchMovies()
+            // Check if the response was successful
             if (response.isSuccessful) {
+                // Return the response body if it's not null, otherwise throw an exception
                 return response.body() ?: throw IllegalStateException("Response body is null")
             } else {
+                // Handle different HTTP error codes
                 when (response.code()) {
                     400 -> throw IOException("Bad Request")
                     401 -> throw IOException("Unauthorized")
@@ -24,8 +37,10 @@ class Repository @Inject constructor() {
                 }
             }
         } catch (e: IOException) {
+            // Wrap IOExceptions with a more descriptive message
             throw IOException("Network Error: ${e.message}", e)
         } catch (e: Exception) {
+            // Wrap other exceptions with a generic message
             throw Exception("An unexpected error occurred: ${e.message}", e)
         }
     }
