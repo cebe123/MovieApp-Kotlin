@@ -2,10 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android") version "2.51.1" apply false
-
+    id("com.google.dagger.hilt.android")
 }
-
 
 android {
     namespace = "com.example.movie"
@@ -14,11 +12,9 @@ android {
     defaultConfig {
         applicationId = "com.example.movie"
         minSdk = 30
-        //noinspection EditedTargetSdkVersion
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,6 +27,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,28 +41,37 @@ android {
     }
 }
 
-
 dependencies {
+    // AndroidX and other libraries
     implementation(libs.androidx.appcompat.v161)
     implementation(libs.material)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.okhttp)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx.v262)
     implementation(libs.androidx.fragment.ktx.v161)
 
-    // Hilt for Dependency Injection
-    implementation(libs.hilt)
-    kapt("com.google.dagger:hilt-android-compiler:2.52")
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // Hilt
+    implementation(libs.hilt.android.v252)
+    kapt(libs.dagger.hilt.android.compiler)
 
     // Testing Libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Hilt Testing
+    androidTestImplementation(libs.dagger.hilt.android.testing)
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    testImplementation(libs.dagger.hilt.android.testing)
+    kaptTest(libs.dagger.hilt.android.compiler)
+
+
 }
 
 kapt {

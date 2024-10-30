@@ -6,7 +6,7 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
+@Singleton
 class Repository @Inject constructor() {
 
     suspend fun getPosts(): Posts {

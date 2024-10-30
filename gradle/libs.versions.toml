@@ -5,11 +5,16 @@ appcompatVersion = "1.7.0"
 coreKtxVersion = "1.13.1"
 fragmentKtxVersion = "1.8.4"
 googleHiltAndroid = "2.52"
+googleHiltAndroidCompiler = "2.52"
 gradle = "8.0.2"
 hiltAndroid = "2.52"
 hiltAndroidCompiler = "2.52"
 hiltAndroidCompilerVersion = "2.52"
+hiltAndroidTestingVersion = "2.52"
+hiltAndroidVersion = "2.52"
+hiltCompiler = "2.52"
 hiltLifecycleViewmodel = "1.0.0"
+javapoet = "1.13.0"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -20,7 +25,7 @@ kotlinGradlePlugin = "1.0"
 kotlinGradlePluginVersion = "1.8.0"
 kotlinxCoroutinesAndroid = "1.9.0"
 kotlinxCoroutinesCore = "1.7.3"
-lifecycleLivedataKtxVersion = "2.6.2"
+lifecycleLivedataKtxVersion = "2.8.6"
 lifecycleViewmodelKtx = "2.8.6"
 material = "1.12.0"
 activity = "1.9.3"
@@ -34,9 +39,11 @@ fragmentKtx = "1.8.4"
 
 [libraries]
 androidx-lifecycle-livedata-ktx-v262 = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtxVersion" }
-hilt = { group = 'com.google.dagger', name = 'hilt-android', version = '2.51.1'}
+dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "googleHiltAndroidCompiler" }
+dagger-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTestingVersion" }
+hilt = { group = 'com.google.dagger', name = 'hilt-android', version = '2.52'}
 androidx-hilt = { group = 'androidx.hilt', name = 'hilt-navigation-compose', version = '1.2.0'}
-hilt-android-compiler = { group = 'com.google.dagger', name = 'hilt-compiler', version = '2.51.1' }
+hilt-android-compiler = { group = 'com.google.dagger', name = 'hilt-compiler', version = '2.52' }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidx-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-fragment-ktx-v161 = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtxVersion" }
@@ -44,6 +51,9 @@ androidx-hilt-lifecycle-viewmodel = { module = "androidx.hilt:hilt-lifecycle-vie
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version = "2.11.0" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+hilt-compiler-v252 = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
+hilt-android-v252 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
+javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -64,7 +74,7 @@ androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", ve
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version = "2.0.0-1.0.23" }
-dagger-hilt = { id = "com.google.dagger.hilt.android", version = "2.51.1" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version = "2.52" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
