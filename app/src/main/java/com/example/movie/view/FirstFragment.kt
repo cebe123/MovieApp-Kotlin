@@ -42,13 +42,20 @@ class FirstFragment : Fragment() {
         return binding.root
     }
 
+
+
     /**
      * Called after the view hierarchy is created.
      * Sets up LiveData observers to update the UI with movie titles or error messages.
      */
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.button.setOnClickListener {
+            viewModel.onButtonClick()
+        }
 
         // Observe the 'posts' LiveData from the ViewModel
         viewModel.posts.observe(viewLifecycleOwner) { posts ->
@@ -66,7 +73,7 @@ class FirstFragment : Fragment() {
         // Observe the 'error' LiveData from the ViewModel
         viewModel.error.observe(viewLifecycleOwner) { error ->
             // Update the TextView with the error message if present
-            error?.let { it ->
+            error?.let {
                 binding.listText.text = "An error occurred: $it"
             }
         }

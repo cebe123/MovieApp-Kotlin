@@ -1,27 +1,27 @@
 package com.example.movie.repo
 
 import com.example.movie.model.Posts
-import com.example.movie.model.RetrofitInstance
+import com.example.movie.di.SimpleApi
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Repository class for fetching movie posts from the network.
  * This class handles network requests and exceptions.
  */
-@Singleton
-class Repository @Inject constructor() {
+
+class Repository @Inject constructor(private val api: SimpleApi) {
 
     /**
      * Fetches movie posts from the network.
      *
      * @return A [Posts] object containing the movie posts.
      */
+
     suspend fun getPosts(): Posts {
         try {
             // Make the network request to fetch movies
-            val response = RetrofitInstance.api.fetchMovies()
+            val response = api.fetchMovies()
             // Check if the response was successful
             if (response.isSuccessful) {
                 // Return the response body if it's not null, otherwise throw an exception

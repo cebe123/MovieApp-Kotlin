@@ -25,6 +25,11 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
     private val _posts = MutableLiveData<Posts?>()
     val posts: LiveData<Posts?> = _posts
 
+    fun onButtonClick() {
+        fetchPosts()
+    }
+
+
     /**
      * Private MutableLiveData to hold error messages.
      * This is exposed as LiveData for observation by the UI.
@@ -33,16 +38,11 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
     val error: LiveData<String?> = _error
 
     /**
-     * Initializes the ViewModel and fetches movie posts.
-     */
-    init {
-        fetchPosts()
-    }
-
-    /**
      * Fetches movie posts from the repository using a coroutine.
      * Updates the _posts LiveData with the fetched posts or the _error LiveData with an error message.
      */
+
+
     private fun fetchPosts() {
         viewModelScope.launch {
             try {
