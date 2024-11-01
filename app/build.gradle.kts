@@ -59,6 +59,8 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android.v252)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     kapt(libs.dagger.hilt.android.compiler)
 
     // Testing Libraries
@@ -72,9 +74,8 @@ dependencies {
     testImplementation(libs.dagger.hilt.android.testing)
     kaptTest(libs.dagger.hilt.android.compiler)
 
-    // Room
-    implementation ("androidx.room:room-runtime:2.4.3")
-    kapt ("androidx.room:room-compiler:2.4.3")
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
 
 
 }

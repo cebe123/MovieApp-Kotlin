@@ -1,27 +1,20 @@
 package com.example.movie.roomdb
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 
 @Dao
 interface MoviesDao {
 
-    @Query("select * from MOVIES")
-    fun getAll() : List<Movies>
-
-    @Query("select * from MOVIES where title")
-    fun getById(id: Int) : Movies
+    @Query("SELECT * FROM Movies_Table")
+    fun readAll(): LiveData<List<Movies>>
 
     @Insert
-    fun insert(title: Movies)
+    suspend fun insertAll(movies: List<Movies>)
 
-    @Delete
-    fun delete(title: Movies)
-
-    @Update
-    fun update(title: Movies)
-
+    @Query("DELETE FROM Movies_Table")
+    suspend fun deleteAll()
 }

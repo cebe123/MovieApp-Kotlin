@@ -3,7 +3,7 @@ activityKtx = "1.9.3"
 agp = "8.6.1"
 appcompatVersion = "1.7.0"
 coreKtxVersion = "1.13.1"
-fragmentKtxVersion = "1.8.4"
+fragmentKtxVersion = "1.8.5"
 googleHiltAndroid = "2.52"
 googleHiltAndroidCompiler = "2.52"
 gradle = "8.0.2"
@@ -25,20 +25,27 @@ kotlinGradlePlugin = "1.0"
 kotlinGradlePluginVersion = "1.8.0"
 kotlinxCoroutinesAndroid = "1.9.0"
 kotlinxCoroutinesCore = "1.7.3"
-lifecycleLivedataKtxVersion = "2.8.6"
-lifecycleViewmodelKtx = "2.8.6"
+lifecycleLivedataKtxVersion = "2.8.7"
+lifecycleViewmodelKtx = "2.8.7"
 material = "1.12.0"
 activity = "1.9.3"
-constraintlayout = "2.1.4"
+constraintlayout = "2.2.0"
 materialVersion = "1.12.0"
 okhttp = "4.11.0"
 retrofit = "2.12.11.0"
 legacySupportV4 = "1.0.0"
-lifecycleLivedataKtx = "2.8.6"
-fragmentKtx = "1.8.4"
+lifecycleLivedataKtx = "2.8.7"
+fragmentKtx = "1.8.5"
+roomCompiler = "2.6.1"
+roomRuntime = "2.6.1"
+roomCommon = "2.6.1"
+roomKtx = "2.6.1"
 
 [libraries]
 androidx-lifecycle-livedata-ktx-v262 = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtxVersion" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-compiler-v261 = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "googleHiltAndroidCompiler" }
 dagger-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTestingVersion" }
 hilt = { group = 'com.google.dagger', name = 'hilt-android', version = '2.52' }
@@ -71,6 +78,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version = "2.11.0" }
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version = "2.0.0-1.0.23" }

@@ -1,30 +1,37 @@
 package com.example.movie.repo
 
-import com.example.movie.model.Posts
+import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.movie.di.SimpleApi
+import com.example.movie.model.Posts
+import com.example.movie.roomdb.Movies
+import com.example.movie.roomdb.MoviesDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
-/**
- * Repository class for fetching movie posts from the network.
- * This class handles network requests and exceptions.
- */
+class Repository @Inject constructor(
+    private val api: SimpleApi,
+    private val moviesDao: MoviesDao
+) {
 
-class Repository @Inject constructor(private val api: SimpleApi) {
-
-    /**
-     * Fetches movie posts from the network.
-     *
-     * @return A [Posts] object containing the movie posts.
-     */
-
-    suspend fun getPosts(): Posts {
+    suspend fun getPostsFromApi(): Posts {
         try {
             // Make the network request to fetch movies
             val response = api.fetchMovies()
             // Check if the response was successful
             if (response.isSuccessful) {
-                // Return the response body if it's not null, otherwise throw an exception
+                //clearDatabase()
+                try {
+                    val moviesToInsert = response.body()?.results?.map { Movies(name = it.title) }
+                    moviesToInsert?.let {
+                        moviesDao.insertAll(it)
+                        Log.d("Repository", "Inserted movies: $it")
+                    }
+                } catch (e: Exception) {
+                    throw e
+                }
                 return response.body() ?: throw IllegalStateException("Response body is null")
             } else {
                 // Handle different HTTP error codes
@@ -44,4 +51,9 @@ class Repository @Inject constructor(private val api: SimpleApi) {
             throw Exception("An unexpected error occurred: ${e.message}", e)
         }
     }
+
+    fun getMoviesFromDatabase(): LiveData<List<Movies>> {
+        return moviesDao.readAll()
+    }
+
 }
