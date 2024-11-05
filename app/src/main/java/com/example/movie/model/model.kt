@@ -13,3 +13,13 @@ data class Movie(
 data class Posts(
     val results: List<Movie>
 )
+
+
+data class WeatherResponse(
+    val main: Main,
+    val name: String
+)
+
+data class Main(
+    val temp: Double,
+)
