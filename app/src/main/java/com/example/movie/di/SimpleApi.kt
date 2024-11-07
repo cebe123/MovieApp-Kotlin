@@ -14,7 +14,7 @@ interface SimpleApi {
 interface WeatherApi {
     @GET("weather")
     suspend fun fetchWeather(
-        @Query("q") city: String = "Istanbul", // İstanbul'u sabit olarak ayarlayabiliriz.
+        @Query("q") city: String = "Istanbul",
         @Query("appid") apiKey: String,
         @Query("units") units: String = "metric" // Celsius olarak sonuç almak için "metric" ekliyoruz
     ): Response<WeatherResponse> // WeatherResponse yapısına dönmeli
