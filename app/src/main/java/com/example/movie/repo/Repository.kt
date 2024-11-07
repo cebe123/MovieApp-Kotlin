@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import com.example.movie.di.SimpleApi
 import com.example.movie.di.WeatherApi
 import com.example.movie.model.Posts
-import com.example.movie.model.WeatherResponse
 import com.example.movie.roomdb.Movies
 import com.example.movie.roomdb.MoviesDao
 import java.io.IOException
@@ -14,7 +13,7 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val api: SimpleApi,
     private val apiWeather: WeatherApi,
-    private val moviesDao: MoviesDao
+    private val moviesDao: MoviesDao,
 ) {
     suspend fun getPostsFromApi(): Posts {
         try {
@@ -60,18 +59,38 @@ class Repository @Inject constructor(
         return moviesDao.deleteAll()
     }
 
-
-    suspend fun getWeather(): Pair<String, Double> { // Change return type to Pair
+    suspend fun getWeather(): Pair<String, Double> {
         val apiKey = "a47f4c8d1c55e5de33edd7860c7b3db0"
-        val response = apiWeather.fetchWeather(apiKey = apiKey)
-
-        if (response.isSuccessful) {
-            val weatherData = response.body()
-            return Pair(weatherData?.name ?: "istanbul", weatherData?.main?.temp ?: throw IllegalStateException("Response body is null"))
-        } else {
-            throw IOException("HTTP Error: ${response.code()}")
+        try {
+            // Hava durumu verilerini çekmek için API isteği yap
+            val response = apiWeather.fetchWeather(apiKey = apiKey)
+            if (response.isSuccessful) {
+                try {
+                    val weatherDataService = response.body()
+                    return Pair(
+                        weatherDataService?.name ?: "istanbul",
+                        weatherDataService?.main?.temp
+                            ?: throw IllegalStateException("Response body is null")
+                    )
+                } catch (e: Exception) {
+                    throw Exception("An error occurred while parsing weather data: ${e.message}", e)
+                }
+            } else {
+                // HTTP hata kodlarını kontrol et
+                when (response.code()) {
+                    400 -> throw IOException("Bad Request")
+                    401 -> throw IOException("Unauthorized")
+                    403 -> throw IOException("Forbidden")
+                    404 -> throw IOException("Not Found")
+                    else -> throw IOException("HTTP Error: ${response.code()}")
+                }
+            }
+        } catch (e: IOException) {
+            // IOExceptions için daha açıklayıcı bir mesaj
+            throw IOException("Network Error: ${e.message}", e)
+        } catch (e: Exception) {
+            // Diğer istisnaları genel bir mesaj
+            throw Exception("An unexpected error occurred: ${e.message}", e)
         }
     }
-
-
 }
