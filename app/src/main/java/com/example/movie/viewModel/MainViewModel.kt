@@ -1,14 +1,22 @@
 package com.example.movie.viewModel
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movie.MainActivity
 import com.example.movie.repo.Repository
 import com.example.movie.roomdb.Movies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 /**
  * ViewModel for fetching and managing movie posts.
@@ -17,6 +25,7 @@ import javax.inject.Inject
  * It fetches movie data from the repository and stores it in the database.
  * It also provides LiveData for observing the fetched movies and any errors that occur.
  */
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: Repository,

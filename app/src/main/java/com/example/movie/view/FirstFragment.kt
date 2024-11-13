@@ -1,6 +1,7 @@
 package com.example.movie.view
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -28,7 +29,9 @@ class FirstFragment : Fragment() {
     private var localService: WeatherService? = null
     private var isBound = false
 
+    //service connection and update UI
     private val connection = object : ServiceConnection {
+        @SuppressLint("SetTextI18n")
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             // Binder'ı al ve LocalService örneğine eriş
             val binder = service as WeatherService.LocalBinder
@@ -64,7 +67,6 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // Clear the database initially within a coroutine
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.clearDatabase()
@@ -74,6 +76,33 @@ class FirstFragment : Fragment() {
         binding.button.setOnClickListener {
             viewModel.onButtonClick()
         }
+
+        binding.sendButton.setOnClickListener {
+
+
+            // Observe the movies from the database to get the current value
+            viewModel.moviesFromDb.observe(viewLifecycleOwner) { movies ->
+                // Convert the list of movies to a formatted string
+                val moviesText = movies.joinToString(separator = "\n") { movie ->
+                    movie.name
+                }
+
+                // Create an Intent and pass the formatted string as EXTRA_TEXT
+                val sendIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, moviesText)
+                    type = "text/plain"
+                }.setClassName("com.example.secondapp", "com.example.secondapp.MainActivity")
+
+                // Attempt to start the activity
+                try {
+                    startActivity(sendIntent)
+                } catch (e: ActivityNotFoundException) {
+                    binding.showErrorText.text = "App not found"
+                }
+            }
+        }
+
 
         // Observe movies from database and update UI
         viewModel.moviesFromDb.observe(viewLifecycleOwner) { movies ->
@@ -86,17 +115,6 @@ class FirstFragment : Fragment() {
             error?.let {
                 binding.listText.text = "An error occurred: $it"
             }
-        }
-
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // Servis bağlantısını kes
-        if (isBound) {
-            requireActivity().unbindService(connection)
-            isBound = false
         }
     }
 }

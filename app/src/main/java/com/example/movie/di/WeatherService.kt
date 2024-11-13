@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WeatherService @Inject constructor(): Service() {
+class WeatherService: Service() {
 
     @Inject
     lateinit var repository: Repository
