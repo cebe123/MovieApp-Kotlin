@@ -78,9 +78,8 @@ class FirstFragment : Fragment() {
         }
 
         binding.sendButton.setOnClickListener {
-
-
-            // Observe the movies from the database to get the current value
+            viewModel.onButtonClick()
+          // Observe the movies from the database to get the current value
             viewModel.moviesFromDb.observe(viewLifecycleOwner) { movies ->
                 // Convert the list of movies to a formatted string
                 val moviesText = movies.joinToString(separator = "\n") { movie ->
@@ -94,7 +93,6 @@ class FirstFragment : Fragment() {
                     type = "text/plain"
                 }.setClassName("com.example.secondapp", "com.example.secondapp.MainActivity")
 
-                // Attempt to start the activity
                 try {
                     startActivity(sendIntent)
                 } catch (e: ActivityNotFoundException) {
@@ -102,7 +100,6 @@ class FirstFragment : Fragment() {
                 }
             }
         }
-
 
         // Observe movies from database and update UI
         viewModel.moviesFromDb.observe(viewLifecycleOwner) { movies ->

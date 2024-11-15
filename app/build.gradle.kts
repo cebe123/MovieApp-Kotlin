@@ -25,6 +25,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
     }
 
@@ -88,3 +89,4 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+

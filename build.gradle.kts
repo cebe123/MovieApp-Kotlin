@@ -14,7 +14,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(libs.kotlin.gradle.plugin) // Replace with the actual version
-
+        classpath(libs.kotlin.gradle.plugin)
     }
 }
