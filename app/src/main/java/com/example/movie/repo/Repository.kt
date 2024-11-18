@@ -8,6 +8,7 @@ import com.example.movie.model.Posts
 import com.example.movie.roomdb.Movies
 import com.example.movie.roomdb.MoviesDao
 import java.io.IOException
+import java.util.Timer
 import javax.inject.Inject
 
 class Repository @Inject constructor(
@@ -32,7 +33,6 @@ class Repository @Inject constructor(
                 }
                 return response.body() ?: throw IllegalStateException("Response body is null")
             } else {
-                // Handle different HTTP error codes
                 when (response.code()) {
                     400 -> throw IOException("Bad Request")
                     401 -> throw IOException("Unauthorized")
@@ -43,10 +43,8 @@ class Repository @Inject constructor(
             }
 
         } catch (e: IOException) {
-            // Wrap IOExceptions with a more descriptive message
             throw IOException("Network Error: ${e.message}", e)
         } catch (e: Exception) {
-            // Wrap other exceptions with a generic message
             throw Exception("An unexpected error occurred: ${e.message}", e)
         }
     }
@@ -90,5 +88,9 @@ class Repository @Inject constructor(
         } catch (e: Exception) {
             throw Exception("An unexpected error occurred: ${e.message}", e)
         }
+    }
+
+    fun timer(){
+        val timer = Timer()
     }
 }

@@ -31,32 +31,32 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/updateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fetch_movies"
+            android:text="Update"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.129"
+            app:layout_constraintHorizontal_bias="0.11"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.033" />
+            app:layout_constraintVertical_bias="0.039" />
 
         <TextView
             android:id="@+id/listText"
-            android:layout_width="369dp"
-            android:layout_height="490dp"
+            android:layout_width="355dp"
+            android:layout_height="509dp"
             android:layout_marginStart="16dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"
-            app:layout_constraintVertical_bias="0.058" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.373" />
 
         <Button
-            android:id="@+id/sendButton"
+            android:id="@+id/routeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Route"
@@ -66,16 +66,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/listText"
             app:layout_constraintVertical_bias="0.104" />
-
-        <TextView
-            android:id="@+id/showErrorText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/sendButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/listText"
-            app:layout_constraintVertical_bias="0.95" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
