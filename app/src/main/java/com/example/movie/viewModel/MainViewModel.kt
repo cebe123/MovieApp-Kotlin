@@ -15,9 +15,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-
 
 /**
  * ViewModel for fetching and managing movie posts.
@@ -35,8 +35,6 @@ class MainViewModel @Inject constructor(
     var sendIntent: Intent = Intent()
     val moviesFromDb: LiveData<List<Movies>> = repository.getMoviesFromDatabase()
     private val _error = MutableLiveData<String?>()
-    private val todayString = LocalDateTime.now().toString()
-
     //init file
     private val sharedPrefs: SharedPreferences = context.getSharedPreferences("time", MODE_PRIVATE)
     private val editor = sharedPrefs.edit()
@@ -46,29 +44,26 @@ class MainViewModel @Inject constructor(
     }
 
     private fun checkUpdateTime() {
+        System.setProperty("user.timezone", "Europe/Istanbul")
         val formatter = DateTimeFormatter.ISO_DATE_TIME
-        Log.i("applog", "formatter: $formatter")
         val getLastTime = sharedPrefs.getString("date", null)
-        Log.i("applog", "todayString: $todayString")
-        Log.i("applog", "getLastTime: $getLastTime")
+        val currentTime = LocalDateTime.now(ZoneId.of("Europe/Istanbul"))
+
         if (getLastTime != null) {
             val lastTime = LocalDateTime.parse(getLastTime, formatter)
-            val currentTime: LocalDateTime = LocalDateTime.parse(todayString, formatter)
             val duration = java.time.Duration.between(lastTime, currentTime)
             val minutesDifference = duration.toMinutes()
 
-            if (minutesDifference >= 1) {
+            if (minutesDifference >= 60 * 24) {
                 onUpdateButtonClick()
-                editor.remove("date")
-                editor.putString("date", todayString).apply()
+                editor.putString("date", currentTime.format(formatter)).apply()
                 Log.i("applog", "(Data updated)")
-
             } else {
                 Log.i("applog", "Veriler guncel")
             }
         } else {
-            editor.putString("date", todayString).apply()
-            Log.i("applog", "(ilk tarih verildi)")
+            editor.putString("date", currentTime.format(formatter)).apply()
+            Log.i("applog", "(İlk tarih verildi)")
         }
     }
 
@@ -84,10 +79,13 @@ class MainViewModel @Inject constructor(
     }
 
     fun setIntent() {
+        Log.i("applog",moviesFromDb.value.toString())
         sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, moviesFromDb.value.toString())
+            putExtra(Intent.EXTRA_TEXT,
+                moviesFromDb.value?.joinToString{it.name})
             type = "text/plain"
         }.setClassName("com.example.secondapp", "com.example.secondapp.MainActivity")
     }
+
 }
