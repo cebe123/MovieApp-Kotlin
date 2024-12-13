@@ -4,23 +4,23 @@ This is a showcase app that is not designed for end users.
 
 ------------------------------------------------------------------------------------
 
-This GitHub project is designed to develop a Movie App. Here's a summary of its main features:
+# MovieApp-Kotlin
 
-Purpose: An application where users can view show top trending movies of the day
+This is a Movie App built using Kotlin for Android, showcasing trending movies with the integration of a REST API and following the MVVM architecture pattern.
 
-Technologies Used:
-Kotlin, Android , RoomDB, RESTApi, Service, MVVM Structure 
+## Features
+- **Trending Movies**: Displays a list of current trending movies.
+- **Movie Details**: View detailed information about each movie.
+- **Search Functionality**: Search for movies by name.
 
-Features:
-Displaying movie information
-Fetching data via an API.
-Routing the app via Implicit Intent
+## Technologies
+- Kotlin
+- Android
+- MVVM Architecture
+- REST API Integration
 
-Application Structure:
-
-Properties:
-Home Screen: Displays the list of movies by pressing Fetch button.
-Service Screen: Shows details of the weather which wrote as service
-Rotue Button:Routing the app via Implicit Intent
-
-For more details, you can explore the code in the repository.
+## Setup
+1. Clone the repository.
+2. Open the project in Android Studio.
+3. Add your API key in the `API_KEY` variable.
+4. Run the app on an emulator or physical device.
